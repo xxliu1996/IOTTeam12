@@ -5,8 +5,8 @@
 
 ## Real-time Pose Estimation
 > https://blog.tensorflow.org/2018/05/real-time-human-pose-estimation-in.html \
-  https://towardsdatascience.com/realtime-multiple-person-2d-pose-estimation-using-tensorflow2-x-93e4c156d45f \
-  https://ai.googleblog.com/2020/08/on-device-real-time-body-pose-tracking.html
+  <!--https://towardsdatascience.com/realtime-multiple-person-2d-pose-estimation-using-tensorflow2-x-93e4c156d45f \-->
+  https://ai.googleblog.com/2020/08/on-device-real-time-body-pose-tracking.html \
   https://github.com/abishekvashok/Rep-Counter
 
 ## How to Install PyTroch & Torchvision on RaspberryPi
