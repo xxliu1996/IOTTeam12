@@ -1,5 +1,12 @@
 # IOTTeam12
-
+This pose estimation project is based on a real time pose animaiton project on:
+```
+https://github.com/xiaowuc2/Real-Time-Pose-Animation
+```
+Compared with the original app, we add a movements counter to the web page and the conter implementation is inspired by the following project.
+```
+https://github.com/bipinkc19/squat-counter
+```
 ## How to implement the **Real-Time-Pose-Estimation** on your laptop.
 My laptop is a Macbook. Here I just provide a tutorial for setting up the environmnet on a Macbook. Please search online for equvilant commands for othere OS.
 
