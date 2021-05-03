@@ -149,6 +149,42 @@ function setupFPS() {
 }
 
 /**
+ * Update the counter panel.
+ */
+function updateCounter(currentPose, poseSelected) {
+  let pose_position = ['No', 'Yes'];
+  if (poseSelected == "squat-left") {
+    let poseAnalysisResults = squatLeftCounter(currentPose);
+    let movements_counter_doc = document.getElementById('movements-counter').contentWindow;
+    movements_counter_doc.document.getElementById('num_pose').innerHTML = 'Number of squats: ' + poseAnalysisResults[2];
+    movements_counter_doc.document.getElementById('angle_pose').innerHTML = 'Angle of knee joint: ' + poseAnalysisResults[0].toFixed(2);
+    movements_counter_doc.document.getElementById('position_pose').innerHTML = 'Squat position: ' + pose_position[poseAnalysisResults[1]];
+    movements_counter_doc.document.getElementById('tracking_leg').innerHTML = 'Tracking leg: Left';
+  } else if (poseSelected == "squat-right") {
+    let poseAnalysisResults = squatRightCounter(currentPose);
+    let movements_counter_doc = document.getElementById('movements-counter').contentWindow;
+    movements_counter_doc.document.getElementById('num_pose').innerHTML = 'Number of squats: ' + poseAnalysisResults[2];
+    movements_counter_doc.document.getElementById('angle_pose').innerHTML = 'Angle of knee joint: ' + poseAnalysisResults[0].toFixed(2);
+    movements_counter_doc.document.getElementById('position_pose').innerHTML = 'Squat position: ' + pose_position[poseAnalysisResults[1]];
+    movements_counter_doc.document.getElementById('tracking_leg').innerHTML = 'Tracking leg: Right';
+  } else if (poseSelected == "benchpress-left") {
+    let poseAnalysisResults = benchPressLeftCounter(currentPose);
+    let movements_counter_doc = document.getElementById('movements-counter').contentWindow;
+    movements_counter_doc.document.getElementById('num_pose').innerHTML = 'Number of presses: ' + poseAnalysisResults[2];
+    movements_counter_doc.document.getElementById('angle_pose').innerHTML = 'Angle of elbow joint: ' + poseAnalysisResults[0].toFixed(2);
+    movements_counter_doc.document.getElementById('position_pose').innerHTML = 'Press position: ' + pose_position[poseAnalysisResults[1]];
+    movements_counter_doc.document.getElementById('tracking_leg').innerHTML = 'Tracking arm: Left';
+  } else if (poseSelected == "benchpress-right") {
+    let poseAnalysisResults = benchPressLeftCounter(currentPose);
+    let movements_counter_doc = document.getElementById('movements-counter').contentWindow;
+    movements_counter_doc.document.getElementById('num_pose').innerHTML = 'Number of presses: ' + poseAnalysisResults[2];
+    movements_counter_doc.document.getElementById('angle_pose').innerHTML = 'Angle of elbow joint: ' + poseAnalysisResults[0].toFixed(2);
+    movements_counter_doc.document.getElementById('position_pose').innerHTML = 'Press position: ' + pose_position[poseAnalysisResults[1]];
+    movements_counter_doc.document.getElementById('tracking_leg').innerHTML = 'Tracking arm: Right';
+  }
+
+}
+/**
  * Feeds an image to posenet to estimate poses - this is where the magic
  * happens. This function loops with a requestAnimationFrame method.
  */
@@ -189,8 +225,11 @@ function detectPoseInRealTime(video) {
     });
 
     poses = poses.concat(all_poses);
-    console.log(all_poses[0]['keypoints']);
-    //console.log(squatLeftCounter(all_poses[0]['keypoints']));
+    //console.log(all_poses[0]['keypoints']);
+    console.log(squatLeftCounter(all_poses[0]['keypoints']));
+    let movements_counter_doc = document.getElementById('movements-counter').contentWindow;
+    let pose_selected = movements_counter_doc.document.getElementById('pose_selector').value;
+    updateCounter(all_poses[0]['keypoints'], pose_selected);
     input.dispose();
 
     keypointCtx.clearRect(0, 0, videoWidth, videoHeight);
