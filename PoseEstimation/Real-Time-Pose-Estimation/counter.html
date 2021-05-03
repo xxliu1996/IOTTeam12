@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Counter of Poses</title>
+</head>
+<body>
+    <div id = "id_pose_selector" class = "pose_selector">
+        <select>
+            <option value="squat-left">Squat-Left</option>
+            <option value="squat-right">Squat-Right</option>
+            <option value="benchpress-left">Benchpress-Left</option>
+            <option value="benchpress-right">Benchpress-Right</option>
+        </select>
+    </div>
+    <div>
+        <hr>
+        <div id = "pose_tracker">
+            <p id = "num_pose">Number of squats: 0</p>
+            <p id = "angle_pose">Angle of knee joint: 0</p>
+            <p id = "position_pose">Squat position: No</p>
+            <p id = "tracking_leg">Tracking leg: Left</p>
+        </div>
+    </div>
+
+    <script src="camera.js"></script>
+</body>
+</html>

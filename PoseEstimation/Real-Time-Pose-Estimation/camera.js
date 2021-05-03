@@ -28,6 +28,8 @@ import {SVGUtils} from './utils/svgUtils'
 import {PoseIllustration} from './illustrationGen/illustration';
 import {Skeleton, facePartName2Index} from './illustrationGen/skeleton';
 import {FileUtils} from './utils/fileUtils';
+import {squatLeftCounter, squatRightCounter} from './utils/squat_counterUtils';
+import {benchPressLeftCounter, benchPressRightCounter} from './utils/bench_press_counterUtils';
 
 import * as girlSVG from './resources/illustration/girl.svg';
 import * as boySVG from './resources/illustration/boy.svg';
@@ -166,7 +168,7 @@ function detectPoseInRealTime(video) {
     stats.begin();
 
     let poses = [];
-   
+
     videoCtx.clearRect(0, 0, videoWidth, videoHeight);
     // Draw video
     videoCtx.save();
@@ -187,6 +189,8 @@ function detectPoseInRealTime(video) {
     });
 
     poses = poses.concat(all_poses);
+    console.log(all_poses[0]['keypoints']);
+    //console.log(squatLeftCounter(all_poses[0]['keypoints']));
     input.dispose();
 
     keypointCtx.clearRect(0, 0, videoWidth, videoHeight);
@@ -224,8 +228,8 @@ function detectPoseInRealTime(video) {
     }
 
     canvasScope.project.activeLayer.scale(
-      canvasWidth / videoWidth, 
-      canvasHeight / videoHeight, 
+      canvasWidth / videoWidth,
+      canvasHeight / videoHeight,
       new canvasScope.Point(0, 0));
 
     // End monitoring code for frames per second
@@ -244,7 +248,7 @@ function setupCanvas() {
     canvasHeight = canvasWidth;
     videoWidth *= 0.7;
     videoHeight *= 0.7;
-  }  
+  }
 
   canvasScope = paper.default;
   let canvas = document.querySelector('.illustration-canvas');;
@@ -289,7 +293,7 @@ export async function bindPage() {
 
   setupGui([], posenet);
   setupFPS();
-  
+
   toggleLoadingUI(false);
   detectPoseInRealTime(video, posenet);
 }
@@ -304,5 +308,5 @@ async function parseSVG(target) {
   illustration = new PoseIllustration(canvasScope);
   illustration.bindSkeleton(skeleton, svgScope);
 }
-    
-bindPage();
+
+bindPage()
