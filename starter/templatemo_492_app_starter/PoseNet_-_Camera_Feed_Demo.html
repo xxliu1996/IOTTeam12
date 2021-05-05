@@ -1,0 +1,524 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: https://pose-animator-demo.firebaseapp.com/camera.html
+Subject: PoseNet - Camera Feed Demo
+Date: Sun, 2 May 2021 21:13:32 -0000
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--B1MhcjLyzUN5jknmsNGA0joYNBmBpKXLK8Fu7QfkeI----"
+
+
+------MultipartBoundary--B1MhcjLyzUN5jknmsNGA0joYNBmBpKXLK8Fu7QfkeI----
+Content-Type: text/html
+Content-ID: <frame-6D3543B01121418BE4EC52E56CD25727@mhtml.blink>
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://pose-animator-demo.firebaseapp.com/camera.html
+
+<!DOCTYPE html><html><head><meta http-equiv=3D"Content-Type" content=3D"tex=
+t/html; charset=3DUTF-8"><link rel=3D"stylesheet" type=3D"text/css" href=3D=
+"cid:css-c9340f63-a92c-4754-8d73-b0ffe69b0d34@mhtml.blink" /><link rel=3D"s=
+tylesheet" type=3D"text/css" href=3D"cid:css-584b1df7-8ac1-4fe0-ab75-ee0c76=
+f5eaf1@mhtml.blink" /><link rel=3D"stylesheet" type=3D"text/css" href=3D"ci=
+d:css-5002dc69-f93c-4431-8786-dca59e52fb2d@mhtml.blink" />
+    <title>PoseNet - Camera Feed Demo</title>
+   =20
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=
+=3D1">
+</head>
+
+<body>
+    <div id=3D"info" style=3D"display:none">
+    </div>
+    <div id=3D"loading" style=3D"position: relative; left: 0px; display: no=
+ne;">
+        <span class=3D"spinner-text" id=3D"status">Setting up camera...</sp=
+an>
+        <div class=3D"sk-spinner sk-spinner-pulse"></div>
+    </div>
+    <div class=3D"canvas-container">
+        <div id=3D"main" style=3D"display: block;">
+            <video id=3D"video" playsinline=3D"" style=3D" -moz-transform: =
+scaleX(-1);
+            -o-transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            display: none;
+            " width=3D"300" height=3D"300">
+            </video>
+            <canvas id=3D"output" class=3D"camera-canvas" width=3D"300" hei=
+ght=3D"300"></canvas>
+            <canvas id=3D"keypoints" class=3D"camera-canvas" width=3D"300" =
+height=3D"300"></canvas>
+        <div style=3D"position: fixed; top: 0px; left: 0px; cursor: pointer=
+; opacity: 0.9; z-index: 10000;"><canvas width=3D"80" height=3D"48" style=
+=3D"width: 80px; height: 48px; display: block;"></canvas><canvas width=3D"8=
+0" height=3D"48" style=3D"width: 80px; height: 48px; display: none;"></canv=
+as><canvas width=3D"80" height=3D"48" style=3D"width: 80px; height: 48px; d=
+isplay: none;"></canvas></div></div>
+        <canvas class=3D"illustration-canvas" width=3D"802" height=3D"802" =
+id=3D"view-0" style=3D"-webkit-user-drag: none; user-select: none; -webkit-=
+tap-highlight-color: rgba(0, 0, 0, 0);">
+    </canvas></div>
+    <div class=3D"footer">
+        <div class=3D"footer-text">
+          <p>
+            Pose Animator runs TF.js <strong>FaceMesh</strong> and <strong>=
+PoseNet</strong> models to animate SVG illustrations with camera feed / sta=
+tic images.<br>
+            It currently supports <strong>single-pose</strong>, <strong>sin=
+gle-face</strong> detection, and has been tested on Destkop Chrome &amp; iO=
+S Safari.
+            <br>
+            (PoseNet model config - MobileNetV1, output stride 16, quant by=
+tes 2)
+          </p>
+        </div>
+      </div>
+   =20
+
+
+<div class=3D"dg ac"><div class=3D"dg main a" style=3D"width: 301px;"><div =
+style=3D"width: 6px; margin-left: -3px; height: 200px; cursor: ew-resize; p=
+osition: absolute;"></div><ul style=3D"height: auto;"><li class=3D"folder">=
+<div class=3D"dg"><ul><li class=3D"title">Image</li></ul></div></li><li cla=
+ss=3D"cr string"><div><span class=3D"property-name">avatarSVG</span><div cl=
+ass=3D"c"><select><option value=3D"girl">girl</option><option value=3D"boy"=
+>boy</option></select></div></div></li><li class=3D"folder"><div class=3D"d=
+g"><ul><li class=3D"title">Debug control</li><li class=3D"cr boolean"><div>=
+<span class=3D"property-name">showDetectionDebug</span><div class=3D"c"><in=
+put type=3D"checkbox" checked=3D"checked"></div></div></li><li class=3D"cr =
+boolean"><div><span class=3D"property-name">showIllustrationDebug</span><di=
+v class=3D"c"><input type=3D"checkbox"></div></div></li></ul></div></li></u=
+l><div class=3D"close-button close-bottom" style=3D"width: 301px;">Close Co=
+ntrols</div></div></div></body></html>
+------MultipartBoundary--B1MhcjLyzUN5jknmsNGA0joYNBmBpKXLK8Fu7QfkeI----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-c9340f63-a92c-4754-8d73-b0ffe69b0d34@mhtml.blink
+
+@charset "utf-8";
+
+body { display: flex; flex-direction: column; align-items: center; justify-=
+content: center; }
+
+.canvas-container { width: 800px; max-width: 100%; display: flex; justify-c=
+ontent: center; position: relative; }
+
+.camera-canvas { position: absolute; transform: scale(0.5, 0.5); transform-=
+origin: 0px 0px; left: 10px; top: 10px; }
+
+#main { left: 0px; top: 0px; position: absolute; }
+
+.illustration-canvas { border: 1px solid rgb(238, 238, 238); }
+
+.footer { position: fixed; left: 0px; bottom: 0px; width: 100%; color: blac=
+k; }
+
+.footer-text { max-width: 600px; text-align: center; margin: auto; }
+
+@media only screen and (max-width: 600px) {
+  .footer-text, .dg { display: none; }
+}
+
+.sk-spinner-pulse { width: 20px; height: 20px; margin: auto 10px; float: le=
+ft; background-color: rgb(51, 51, 51); border-radius: 100%; animation: 1s e=
+ase-in-out 0s infinite normal none running sk-pulseScaleOut; }
+
+@-webkit-keyframes sk-pulseScaleOut {=20
+  0% { transform: scale(0); }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes sk-pulseScaleOut {=20
+  0% { transform: scale(0); }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+.spinner-text { float: left; }
+------MultipartBoundary--B1MhcjLyzUN5jknmsNGA0joYNBmBpKXLK8Fu7QfkeI----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-584b1df7-8ac1-4fe0-ab75-ee0c76f5eaf1@mhtml.blink
+
+@charset "utf-8";
+
+.dg ul { list-style: none; margin: 0px; padding: 0px; width: 100%; clear: b=
+oth; }
+
+.dg.ac { position: fixed; top: 0px; left: 0px; right: 0px; height: 0px; z-i=
+ndex: 0; }
+
+.dg:not(.ac) .main { overflow: hidden; }
+
+.dg.main { transition: opacity 0.1s linear 0s; }
+
+.dg.main.taller-than-window { overflow-y: auto; }
+
+.dg.main.taller-than-window .close-button { opacity: 1; margin-top: -1px; b=
+order-top: 1px solid rgb(44, 44, 44); }
+
+.dg.main ul.closed .close-button { opacity: 1 !important; }
+
+.dg.main:hover .close-button, .dg.main .close-button.drag { opacity: 1; }
+
+.dg.main .close-button { transition: opacity 0.1s linear 0s; border: 0px; l=
+ine-height: 19px; height: 20px; cursor: pointer; text-align: center; backgr=
+ound-color: rgb(0, 0, 0); }
+
+.dg.main .close-button.close-top { position: relative; }
+
+.dg.main .close-button.close-bottom { position: absolute; }
+
+.dg.main .close-button:hover { background-color: rgb(17, 17, 17); }
+
+.dg.a { float: right; margin-right: 15px; overflow-y: visible; }
+
+.dg.a.has-save > ul.close-top { margin-top: 0px; }
+
+.dg.a.has-save > ul.close-bottom { margin-top: 27px; }
+
+.dg.a.has-save > ul.closed { margin-top: 0px; }
+
+.dg.a .save-row { top: 0px; z-index: 1002; }
+
+.dg.a .save-row.close-top { position: relative; }
+
+.dg.a .save-row.close-bottom { position: fixed; }
+
+.dg li { transition: overflow 0.1s linear 0s; }
+
+.dg li:not(.folder) { cursor: auto; height: 27px; line-height: 27px; paddin=
+g: 0px 4px 0px 5px; }
+
+.dg li.folder { padding: 0px; border-left: 4px solid rgba(0, 0, 0, 0); }
+
+.dg li.title { cursor: pointer; margin-left: -4px; }
+
+.dg .closed li:not(.title), .dg .closed ul li, .dg .closed ul li > * { heig=
+ht: 0px; overflow: hidden; border: 0px; }
+
+.dg .cr { clear: both; padding-left: 3px; height: 27px; overflow: hidden; }
+
+.dg .property-name { cursor: default; float: left; clear: left; width: 40%;=
+ overflow: hidden; text-overflow: ellipsis; }
+
+.dg .c { float: left; width: 60%; position: relative; }
+
+.dg .c input[type=3D"text"] { border: 0px; margin-top: 4px; padding: 3px; w=
+idth: 100%; float: right; }
+
+.dg .has-slider input[type=3D"text"] { width: 30%; margin-left: 0px; }
+
+.dg .slider { float: left; width: 66%; margin-left: -5px; margin-right: 0px=
+; height: 19px; margin-top: 4px; }
+
+.dg .slider-fg { height: 100%; }
+
+.dg .c input[type=3D"checkbox"] { margin-top: 7px; }
+
+.dg .c select { margin-top: 5px; }
+
+.dg .cr.function, .dg .cr.function .property-name, .dg .cr.function *, .dg =
+.cr.boolean, .dg .cr.boolean * { cursor: pointer; }
+
+.dg .cr.color { overflow: visible; }
+
+.dg .selector { display: none; position: absolute; margin-left: -9px; margi=
+n-top: 23px; z-index: 10; }
+
+.dg .c:hover .selector, .dg .selector.drag { display: block; }
+
+.dg li.save-row { padding: 0px; }
+
+.dg li.save-row .button { display: inline-block; padding: 0px 6px; }
+
+.dg.dialogue { background-color: rgb(34, 34, 34); width: 460px; padding: 15=
+px; font-size: 13px; line-height: 15px; }
+
+#dg-new-constructor { padding: 10px; color: rgb(34, 34, 34); font-family: M=
+onaco, monospace; font-size: 10px; border: 0px; resize: none; box-shadow: r=
+gb(136, 136, 136) 1px 1px 1px inset; overflow-wrap: break-word; margin: 12p=
+x 0px; display: block; width: 440px; overflow-y: scroll; height: 100px; pos=
+ition: relative; }
+
+#dg-local-explain { display: none; font-size: 11px; line-height: 17px; bord=
+er-radius: 3px; background-color: rgb(51, 51, 51); padding: 8px; margin-top=
+: 10px; }
+
+#dg-local-explain code { font-size: 10px; }
+
+#dat-gui-save-locally { display: none; }
+
+.dg { color: rgb(238, 238, 238); font: 11px "Lucida Grande", sans-serif; te=
+xt-shadow: rgb(17, 17, 17) 0px -1px 0px; }
+
+.dg.main::-webkit-scrollbar { width: 5px; background: rgb(26, 26, 26); }
+
+.dg.main::-webkit-scrollbar-corner { height: 0px; display: none; }
+
+.dg.main::-webkit-scrollbar-thumb { border-radius: 5px; background: rgb(103=
+, 103, 103); }
+
+.dg li:not(.folder) { background: rgb(26, 26, 26); border-bottom: 1px solid=
+ rgb(44, 44, 44); }
+
+.dg li.save-row { line-height: 25px; background: rgb(218, 213, 203); border=
+: 0px; }
+
+.dg li.save-row select { margin-left: 5px; width: 108px; }
+
+.dg li.save-row .button { margin-left: 5px; margin-top: 1px; border-radius:=
+ 2px; font-size: 9px; line-height: 7px; padding: 4px 4px 5px; background: r=
+gb(197, 189, 173); color: rgb(255, 255, 255); text-shadow: rgb(176, 165, 14=
+3) 0px 1px 0px; box-shadow: rgb(176, 165, 143) 0px -1px 0px; cursor: pointe=
+r; }
+
+.dg li.save-row .button.gears { background: url("data:image/png;base64,iVBO=
+Rw0KGgoAAAANSUhEUgAAAAsAAAANCAYAAAB/9ZQ7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWF=
+nZVJlYWR5ccllPAAAAQJJREFUeNpiYKAU/P//PwGIC/ApCABiBSAW+I8AClAcgKxQ4T9hoMAEUr=
+xx2QSGN6+egDX+/vWT4e7N82AMYoPAx/evwWoYoSYbACX2s7KxCxzcsezDh3evFoDEBYTEEqycg=
+gWAzA9AuUSQQgeYPa9fPv6/YWm/Acx5IPb7ty/fw+QZblw67vDs8R0YHyQhgObx+yAJkBqmG5dP=
+PDh1aPOGR/eugW0G4vlIoTIfyFcA+QekhhHJhPdQxbiAIguMBTQZrPD7108M6roWYDFQiIAAv6A=
+ow/1bFwXgis+f2LUAynwoIaNcz8XNx3Dl7MEJUDGQpx9gtQ8YCueB+D26OECAAQDadt7e46D42Q=
+AAAABJRU5ErkJggg=3D=3D") 2px 1px no-repeat rgb(197, 189, 173); height: 7px;=
+ width: 8px; }
+
+.dg li.save-row .button:hover { background-color: rgb(186, 177, 158); box-s=
+hadow: rgb(176, 165, 143) 0px -1px 0px; }
+
+.dg li.folder { border-bottom: 0px; }
+
+.dg li.title { padding-left: 16px; background: url("data:image/gif;base64,R=
+0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlI+hKgFxoCgAOw=
+=3D=3D") 6px 10px no-repeat rgb(0, 0, 0); cursor: pointer; border-bottom: 1=
+px solid rgba(255, 255, 255, 0.2); }
+
+.dg .closed li.title { background-image: url("data:image/gif;base64,R0lGODl=
+hBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlGIWqMCbWAEAOw=3D=3D")=
+; }
+
+.dg .cr.boolean { border-left: 3px solid rgb(128, 103, 135); }
+
+.dg .cr.color { border-left: 3px solid; }
+
+.dg .cr.function { border-left: 3px solid rgb(230, 29, 95); }
+
+.dg .cr.number { border-left: 3px solid rgb(47, 161, 214); }
+
+.dg .cr.number input[type=3D"text"] { color: rgb(47, 161, 214); }
+
+.dg .cr.string { border-left: 3px solid rgb(30, 211, 111); }
+
+.dg .cr.string input[type=3D"text"] { color: rgb(30, 211, 111); }
+
+.dg .cr.function:hover, .dg .cr.boolean:hover { background: rgb(17, 17, 17)=
+; }
+
+.dg .c input[type=3D"text"] { background: rgb(48, 48, 48); outline: none; }
+
+.dg .c input[type=3D"text"]:hover { background: rgb(60, 60, 60); }
+
+.dg .c input[type=3D"text"]:focus { background: rgb(73, 73, 73); color: rgb=
+(255, 255, 255); }
+
+.dg .c .slider { background: rgb(48, 48, 48); cursor: ew-resize; }
+
+.dg .c .slider-fg { background: rgb(47, 161, 214); max-width: 100%; }
+
+.dg .c .slider:hover { background: rgb(60, 60, 60); }
+
+.dg .c .slider:hover .slider-fg { background: rgb(68, 171, 218); }
+------MultipartBoundary--B1MhcjLyzUN5jknmsNGA0joYNBmBpKXLK8Fu7QfkeI----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-5002dc69-f93c-4431-8786-dca59e52fb2d@mhtml.blink
+
+@charset "utf-8";
+
+.dg ul { list-style: none; margin: 0px; padding: 0px; width: 100%; clear: b=
+oth; }
+
+.dg.ac { position: fixed; top: 0px; left: 0px; right: 0px; height: 0px; z-i=
+ndex: 0; }
+
+.dg:not(.ac) .main { overflow: hidden; }
+
+.dg.main { transition: opacity 0.1s linear 0s; }
+
+.dg.main.taller-than-window { overflow-y: auto; }
+
+.dg.main.taller-than-window .close-button { opacity: 1; margin-top: -1px; b=
+order-top: 1px solid rgb(44, 44, 44); }
+
+.dg.main ul.closed .close-button { opacity: 1 !important; }
+
+.dg.main:hover .close-button, .dg.main .close-button.drag { opacity: 1; }
+
+.dg.main .close-button { transition: opacity 0.1s linear 0s; border: 0px; l=
+ine-height: 19px; height: 20px; cursor: pointer; text-align: center; backgr=
+ound-color: rgb(0, 0, 0); }
+
+.dg.main .close-button.close-top { position: relative; }
+
+.dg.main .close-button.close-bottom { position: absolute; }
+
+.dg.main .close-button:hover { background-color: rgb(17, 17, 17); }
+
+.dg.a { float: right; margin-right: 15px; overflow-y: visible; }
+
+.dg.a.has-save > ul.close-top { margin-top: 0px; }
+
+.dg.a.has-save > ul.close-bottom { margin-top: 27px; }
+
+.dg.a.has-save > ul.closed { margin-top: 0px; }
+
+.dg.a .save-row { top: 0px; z-index: 1002; }
+
+.dg.a .save-row.close-top { position: relative; }
+
+.dg.a .save-row.close-bottom { position: fixed; }
+
+.dg li { transition: overflow 0.1s linear 0s; }
+
+.dg li:not(.folder) { cursor: auto; height: 27px; line-height: 27px; paddin=
+g: 0px 4px 0px 5px; }
+
+.dg li.folder { padding: 0px; border-left: 4px solid rgba(0, 0, 0, 0); }
+
+.dg li.title { cursor: pointer; margin-left: -4px; }
+
+.dg .closed li:not(.title), .dg .closed ul li, .dg .closed ul li > * { heig=
+ht: 0px; overflow: hidden; border: 0px; }
+
+.dg .cr { clear: both; padding-left: 3px; height: 27px; overflow: hidden; }
+
+.dg .property-name { cursor: default; float: left; clear: left; width: 40%;=
+ overflow: hidden; text-overflow: ellipsis; }
+
+.dg .c { float: left; width: 60%; position: relative; }
+
+.dg .c input[type=3D"text"] { border: 0px; margin-top: 4px; padding: 3px; w=
+idth: 100%; float: right; }
+
+.dg .has-slider input[type=3D"text"] { width: 30%; margin-left: 0px; }
+
+.dg .slider { float: left; width: 66%; margin-left: -5px; margin-right: 0px=
+; height: 19px; margin-top: 4px; }
+
+.dg .slider-fg { height: 100%; }
+
+.dg .c input[type=3D"checkbox"] { margin-top: 7px; }
+
+.dg .c select { margin-top: 5px; }
+
+.dg .cr.function, .dg .cr.function .property-name, .dg .cr.function *, .dg =
+.cr.boolean, .dg .cr.boolean * { cursor: pointer; }
+
+.dg .cr.color { overflow: visible; }
+
+.dg .selector { display: none; position: absolute; margin-left: -9px; margi=
+n-top: 23px; z-index: 10; }
+
+.dg .c:hover .selector, .dg .selector.drag { display: block; }
+
+.dg li.save-row { padding: 0px; }
+
+.dg li.save-row .button { display: inline-block; padding: 0px 6px; }
+
+.dg.dialogue { background-color: rgb(34, 34, 34); width: 460px; padding: 15=
+px; font-size: 13px; line-height: 15px; }
+
+#dg-new-constructor { padding: 10px; color: rgb(34, 34, 34); font-family: M=
+onaco, monospace; font-size: 10px; border: 0px; resize: none; box-shadow: r=
+gb(136, 136, 136) 1px 1px 1px inset; overflow-wrap: break-word; margin: 12p=
+x 0px; display: block; width: 440px; overflow-y: scroll; height: 100px; pos=
+ition: relative; }
+
+#dg-local-explain { display: none; font-size: 11px; line-height: 17px; bord=
+er-radius: 3px; background-color: rgb(51, 51, 51); padding: 8px; margin-top=
+: 10px; }
+
+#dg-local-explain code { font-size: 10px; }
+
+#dat-gui-save-locally { display: none; }
+
+.dg { color: rgb(238, 238, 238); font: 11px "Lucida Grande", sans-serif; te=
+xt-shadow: rgb(17, 17, 17) 0px -1px 0px; }
+
+.dg.main::-webkit-scrollbar { width: 5px; background: rgb(26, 26, 26); }
+
+.dg.main::-webkit-scrollbar-corner { height: 0px; display: none; }
+
+.dg.main::-webkit-scrollbar-thumb { border-radius: 5px; background: rgb(103=
+, 103, 103); }
+
+.dg li:not(.folder) { background: rgb(26, 26, 26); border-bottom: 1px solid=
+ rgb(44, 44, 44); }
+
+.dg li.save-row { line-height: 25px; background: rgb(218, 213, 203); border=
+: 0px; }
+
+.dg li.save-row select { margin-left: 5px; width: 108px; }
+
+.dg li.save-row .button { margin-left: 5px; margin-top: 1px; border-radius:=
+ 2px; font-size: 9px; line-height: 7px; padding: 4px 4px 5px; background: r=
+gb(197, 189, 173); color: rgb(255, 255, 255); text-shadow: rgb(176, 165, 14=
+3) 0px 1px 0px; box-shadow: rgb(176, 165, 143) 0px -1px 0px; cursor: pointe=
+r; }
+
+.dg li.save-row .button.gears { background: url("data:image/png;base64,iVBO=
+Rw0KGgoAAAANSUhEUgAAAAsAAAANCAYAAAB/9ZQ7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWF=
+nZVJlYWR5ccllPAAAAQJJREFUeNpiYKAU/P//PwGIC/ApCABiBSAW+I8AClAcgKxQ4T9hoMAEUr=
+xx2QSGN6+egDX+/vWT4e7N82AMYoPAx/evwWoYoSYbACX2s7KxCxzcsezDh3evFoDEBYTEEqycg=
+gWAzA9AuUSQQgeYPa9fPv6/YWm/Acx5IPb7ty/fw+QZblw67vDs8R0YHyQhgObx+yAJkBqmG5dP=
+PDh1aPOGR/eugW0G4vlIoTIfyFcA+QekhhHJhPdQxbiAIguMBTQZrPD7108M6roWYDFQiIAAv6A=
+ow/1bFwXgis+f2LUAynwoIaNcz8XNx3Dl7MEJUDGQpx9gtQ8YCueB+D26OECAAQDadt7e46D42Q=
+AAAABJRU5ErkJggg=3D=3D") 2px 1px no-repeat rgb(197, 189, 173); height: 7px;=
+ width: 8px; }
+
+.dg li.save-row .button:hover { background-color: rgb(186, 177, 158); box-s=
+hadow: rgb(176, 165, 143) 0px -1px 0px; }
+
+.dg li.folder { border-bottom: 0px; }
+
+.dg li.title { padding-left: 16px; background: url("data:image/gif;base64,R=
+0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlI+hKgFxoCgAOw=
+=3D=3D") 6px 10px no-repeat rgb(0, 0, 0); cursor: pointer; border-bottom: 1=
+px solid rgba(255, 255, 255, 0.2); }
+
+.dg .closed li.title { background-image: url("data:image/gif;base64,R0lGODl=
+hBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlGIWqMCbWAEAOw=3D=3D")=
+; }
+
+.dg .cr.boolean { border-left: 3px solid rgb(128, 103, 135); }
+
+.dg .cr.color { border-left: 3px solid; }
+
+.dg .cr.function { border-left: 3px solid rgb(230, 29, 95); }
+
+.dg .cr.number { border-left: 3px solid rgb(47, 161, 214); }
+
+.dg .cr.number input[type=3D"text"] { color: rgb(47, 161, 214); }
+
+.dg .cr.string { border-left: 3px solid rgb(30, 211, 111); }
+
+.dg .cr.string input[type=3D"text"] { color: rgb(30, 211, 111); }
+
+.dg .cr.function:hover, .dg .cr.boolean:hover { background: rgb(17, 17, 17)=
+; }
+
+.dg .c input[type=3D"text"] { background: rgb(48, 48, 48); outline: none; }
+
+.dg .c input[type=3D"text"]:hover { background: rgb(60, 60, 60); }
+
+.dg .c input[type=3D"text"]:focus { background: rgb(73, 73, 73); color: rgb=
+(255, 255, 255); }
+
+.dg .c .slider { background: rgb(48, 48, 48); cursor: ew-resize; }
+
+.dg .c .slider-fg { background: rgb(47, 161, 214); max-width: 100%; }
+
+.dg .c .slider:hover { background: rgb(60, 60, 60); }
+
+.dg .c .slider:hover .slider-fg { background: rgb(68, 171, 218); }
+------MultipartBoundary--B1MhcjLyzUN5jknmsNGA0joYNBmBpKXLK8Fu7QfkeI------
