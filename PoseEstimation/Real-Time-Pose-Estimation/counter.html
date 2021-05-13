@@ -4,8 +4,8 @@
     <title>Counter of Poses</title>
 </head>
 <body>
-    <div id = "id_pose_selector" class = "pose_selector">
-        <select>
+    <div>
+        <select id = "pose_selector">
             <option value="squat-left">Squat-Left</option>
             <option value="squat-right">Squat-Right</option>
             <option value="benchpress-left">Benchpress-Left</option>
@@ -19,9 +19,64 @@
             <p id = "angle_pose">Angle of knee joint: 0</p>
             <p id = "position_pose">Squat position: No</p>
             <p id = "tracking_leg">Tracking leg: Left</p>
+            <button type="button" onclick="updateDatabase()">Save Data</button>
         </div>
     </div>
 
     <script src="camera.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAJYdL2lck3THKrhyILJIeSo_q52P579qA",
+            authDomain: "iot-project-pose-counter-t12.firebaseapp.com",
+            databaseURL: "https://iot-project-pose-counter-t12-default-rtdb.firebaseio.com/",
+            projectId: "iot-project-pose-counter-t12",
+            storageBucket: "iot-project-pose-counter-t12.appspot.com",
+            messagingSenderId: "630039970059",
+            appId: "1:630039970059:web:a11302aed1bd93269aa20e"
+        };
+        // Initialize Firebase
+       firebase.default.initializeApp(firebaseConfig);
+       // Function to upload the exercise data to the database;
+       function updateDatabase(usrID, usrEmail) {
+           var database = firebase.database();
+           var userIDRef = database.ref('user_info/user_id');
+           var userEmailRef = database.ref('user_info/user_email');
+           var userIDValue = "None";
+           var userEmailValue = "None";
+
+
+           userIDRef.on('value', (snapshot) => {
+               userIDValue = snapshot.val();
+           });
+           userEmailRef.on('value', (snapshot) => {
+                   userEmailValue = snapshot.val();
+           });
+           console.log(userIDValue);
+           console.log(userEmailValue);
+           if (true/*userIDValue == usrID && userEmailValue == usrEmail*/) {
+               var updates = {};
+               let pose_name_count = document.getElementById('num_pose').innerHTML;
+               var num_pose = pose_name_count.match(/\d+(.\d+)?/g);
+               var index_squat = pose_name_count.indexOf("squats");
+               var index_benchpress = pose_name_count.indexOf("presses");
+               var pose_name = "None";
+               if (index_squat != -1) {
+                   pose_name = "squat";
+               }
+               if (index_benchpress != -1) {
+                   pose_name = "bench press";
+               }
+               updates['exercise_data/pose_counter'] = parseInt(num_pose[0]);
+               updates['exercise_data/pose_name'] = pose_name;
+               firebase.database().ref().update(updates);
+           }
+       }
+
+       function uploadData() {
+           updateDatabase("iot-team12", "iot-team12@gmail.com");
+
+       }
+    </script>
 </body>
 </html>

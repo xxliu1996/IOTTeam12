@@ -67,6 +67,46 @@ const avatarSvgs = {
   'tom-nook': tomNookSVG.default,
 };
 
+/*
+// Set up firebase connection
+// Firebase App (the core Firebase SDK) is always required and must be listed first
+var firebase = require('firebase/app');
+require('firebase/database');
+var firebaseConfig = {
+  apiKey: "AIzaSyAJYdL2lck3THKrhyILJIeSo_q52P579qA",
+  authDomain: "iot-project-pose-counter-t12.firebaseapp.com",
+  projectId: "iot-project-pose-counter-t12",
+  storageBucket: "iot-project-pose-counter-t12.appspot.com",
+  messagingSenderId: "630039970059",
+  appId: "1:630039970059:web:a11302aed1bd93269aa20e"
+};
+// Initialize Firebase
+firebase.default.initializeApp(firebaseConfig);
+
+// Function to upload the exercise data to the database.
+function updateDatabase(usrID, usrEmail, poseName, poseCounts, exerciseTime) {
+  var database = firebase.database();
+  var userIDRef = database.ref('user_info/user_id');
+  var userEmailRef = database.ref('user_info/user_email');
+  var userIDValue = "None";
+  var userEmailValue = "None";
+
+  userIDRef.on('value', (snapshot) => {
+    userIDValue = snapshot.val();
+    userEmailRef.on('value', (snapshot) => {
+      userEmailValue = snapshot.val();
+    });
+    if (userIDValue == usrID && userEmailValue == usrEmail) {
+      var database_ref = firebase.database().ref();
+      database_ref.update({'exercise_data/pose_name':poseName});
+      database_ref.update({'exercise_data/pose_counter':poseCounts});
+      database_ref.update({'exercise_data/time':exerciseTime});
+    }
+  });
+
+}
+*/
+
 /**
  * Loads a the camera to be used in the demo
  *
@@ -160,6 +200,7 @@ function updateCounter(currentPose, poseSelected) {
     movements_counter_doc.document.getElementById('angle_pose').innerHTML = 'Angle of knee joint: ' + poseAnalysisResults[0].toFixed(2);
     movements_counter_doc.document.getElementById('position_pose').innerHTML = 'Squat position: ' + pose_position[poseAnalysisResults[1]];
     movements_counter_doc.document.getElementById('tracking_leg').innerHTML = 'Tracking leg: Left';
+    // updateDatabase("iot-team12", "iot-team12@gmail.com", "squat", poseAnalysisResults[2], 10);
   } else if (poseSelected == "squat-right") {
     let poseAnalysisResults = squatRightCounter(currentPose);
     let movements_counter_doc = document.getElementById('movements-counter').contentWindow;
@@ -225,8 +266,8 @@ function detectPoseInRealTime(video) {
     });
 
     poses = poses.concat(all_poses);
-    //console.log(all_poses[0]['keypoints']);
-    console.log(squatLeftCounter(all_poses[0]['keypoints']));
+    // console.log(all_poses[0]['keypoints']);
+    // console.log(squatLeftCounter(all_poses[0]['keypoints']));
     let movements_counter_doc = document.getElementById('movements-counter').contentWindow;
     let pose_selected = movements_counter_doc.document.getElementById('pose_selector').value;
     updateCounter(all_poses[0]['keypoints'], pose_selected);
