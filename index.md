@@ -1,37 +1,35 @@
-## Welcome to GitHub Pages
+# IOTTeam12
+This pose estimation project is based on a real time pose animaiton project on:
+```
+https://github.com/xiaowuc2/Real-Time-Pose-Animation
+```
+Compared with the original app, we add a movements counter to the web page and the conter implementation is inspired by the following project.
+```
+https://github.com/bipinkc19/squat-counter
+```
+## How to implement the **Real-Time-Pose-Estimation** on your laptop.
+My laptop is a Macbook. Here I just provide a tutorial for setting up the environmnet on a Macbook. Please search online for equvilant commands for othere OS.
 
-You can use the [editor on GitHub](https://github.com/xxliu1996/IOTTeam12/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+1. Install ```Homebrew``` on your Macbook. (If you have already installed it, skip this step.)
+```shell
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+2. Install ```node``` , ```npm```, and ```yarn```. (If you have already installed it, skip this step.)
+```shell
+brew install node
+brew install npm
+brew install yarn
+```
 
-### Jekyll Themes
+3. Clone the reposigory into your compututer.
+```shell
+git clone https://github.com/icedragonsoul/IOTTeam12.git
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/xxliu1996/IOTTeam12/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+4. Go to directory ```IOTTeam12/PoseEstimation/Real-Time-Pose-Estimation```, and install essential packages. (Just copied from ```https://github.com/xiaowuc2/Real-Time-Pose-Animation```.)
+```shell
+cd IOTTeam12/PoseEstimation/Real-Time-Pose-Estimation
+yarn
+npm install paper
+```
